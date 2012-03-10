@@ -9,4 +9,6 @@ touch part.db
 ../db/DbLoader part.db PA003 < TmpPart.p5
 ../db/DbLoader part.db PA004 < TmpPart.p6
 ../db/DbLoader part.db PA005 < TmpPart.p7
+../db/DbLoader part.db HEAD < Header.pg
+../db/DbLoader part.db TAIL < Footer.pg
 

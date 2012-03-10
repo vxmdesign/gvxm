@@ -8,6 +8,7 @@
 #include "DslInterface.h"
 #include "BomKeyNode.h"
 #include "NetLeafProc.h"
+#include "ListNode.h"
 
 
 class NetListCommand: public CommandBase{
@@ -17,6 +18,7 @@ class NetListCommand: public CommandBase{
   MapNode *close();
  private:
   BomKeyNode *mBkn;
+  ListNode *mList;
 };
 
 CommandBase *newNetListCommand();

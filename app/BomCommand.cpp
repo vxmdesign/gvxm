@@ -32,7 +32,7 @@ void BomCommand::addNode(Modifier *pMod, MapNode *pNode){
       mn = popTable(mn);
       sprintf(lname, "%s_%d", kvn->key(),c + 2);
       k2 = getKeyVal(lname, mn);
-      mBkn->addComponent(pNode);
+      mBkn->addComponent(k2);
     }
   }
 }

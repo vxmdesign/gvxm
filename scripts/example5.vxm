@@ -71,7 +71,7 @@ circuit1:{
   netlist(
     vcc:{u1.vcc,u2.vcc,r1.p.1},
     gnd:{u1.gnd,u2.gnd},
-    @{*u1.clk, u2.out},
+    -@{*u1.clk, u2.out},
     @{u1.port_en, r1.p.2}
   )
 };

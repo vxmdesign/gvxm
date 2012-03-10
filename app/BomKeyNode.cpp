@@ -21,7 +21,7 @@ void BomKeyNode::addComponent(MapNode *pNode){
 }
 
 void BomKeyNode::buildItem(const char *pId, KeyValNode *pKvn){
-  char op[4096];
+  //char op[4096];
   BomItem *tmp;
   char args[10];
   KeyValNode *kvn;
@@ -51,8 +51,8 @@ void BomKeyNode::buildItem(const char *pId, KeyValNode *pKvn){
   }
   tmp->next = mHead;
   mHead = tmp;
-  tmp->block->buildBlock(op);
-  printf("%s\n", op);
+  //tmp->block->buildBlock(op);
+  //printf("%s\n", op);
 }
 
 void BomKeyNode::setMajor(int pMajor){
@@ -76,15 +76,42 @@ int BomKeyNode::refCount(char pRef){
   return cnt;
 }
 
-void BomKeyNode::printRef(MapNode *pNode, const char *tag){
+const char* BomKeyNode::printRef(MapNode *pNode){
   BomItem *tmp;
+  LeafNode *lf;
   tmp = mHead;
   while(tmp != NULL){
     if(AcontainsB(tmp->node, pNode) == 1){
-      //printf("REF: %c%d%02d\n", tmp->refChar, mMajor, tmp->idNum);      
-      printf("%c%d%02d-%s ", tmp->refChar, mMajor, tmp->idNum,tag);      
-      return;
+      //printf("REF: %c%d%02d\n", tmp->refChar, mMajor, tmp->idNum);     
+      if(pNode->nodeType() == 1){
+	lf = (LeafNode*)pNode;
+	sprintf(mTmpRef,"%c%d%02d-%s ", tmp->refChar, mMajor, tmp->idNum,lf->value());      
+      }else{
+	sprintf(mTmpRef, "%c%d%02d-? ", tmp->refChar, mMajor, tmp->idNum);      
+      }
+      return mTmpRef;
     }
     tmp = tmp->next;
   }
+  strcpy(mTmpRef, "NODE_NOT_FOUND");
+  return mTmpRef;
+}
+
+void BomKeyNode::fprintPcb(FILE *pFout){
+  BomItem *tmp;
+  char op[4096];
+  TextBlock *h;
+  TextBlock *t;
+  h = gVxm.parts->getPart("HEAD");
+  t = gVxm.parts->getPart("TAIL");  
+  h->buildBlock(op);
+  fprintf(pFout, "%s\n", op);
+  tmp = mHead;
+  while(tmp != NULL){
+    tmp->block->buildBlock(op);
+    fprintf(pFout, "%s\n", op);    
+    tmp = tmp->next;
+  }
+  t->buildBlock(op);
+  fprintf(pFout, "%s\n", op);
 }

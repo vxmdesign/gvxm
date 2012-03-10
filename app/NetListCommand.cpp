@@ -18,6 +18,7 @@ NetListCommand::NetListCommand(){
     printf("Not correct type\n");
     return;
   }
+  mList = emptyList();
   //  printf("Netlist called\n");
 
 }
@@ -28,7 +29,7 @@ void NetListCommand::addNode(Modifier *pMod, MapNode *pNode){
   ListNode *nlst;
   int c;
   NetLeafProc *nlp;
-  LeafNode *tmp;
+  //  LeafNode *tmp;
   if(mBkn == NULL){
     printf("Invalid. No bom\n");
     return;
@@ -57,24 +58,20 @@ void NetListCommand::addNode(Modifier *pMod, MapNode *pNode){
     }
   }
   ((KeyValNode*)pNode)->resetValue(nlst);
-  printf("%s: ", ((KeyValNode*)pNode)->key());
-  for(c = 0; c < nlst->count(); c++){
-    tmp = (LeafNode *) nlst->getNode(c);
-    mBkn->printRef(tmp, tmp->value());
-  }
-  printf("\n");
-  //printf("Checking for node\n");
-  //mBkn->printRef(pNode);
-  //printf("Dumb node append\n");
-  //mList->append(pNode);
+  mList->append(pNode);
+  //  printf("%s: ", ((KeyValNode*)pNode)->key());
+  //for(c = 0; c < nlst->count(); c++){
+  //  tmp = (LeafNode *) nlst->getNode(c);
+  //  mBkn->printRef(tmp, tmp->value());
+  //}
+  //printf("\n");
 }
 
 MapNode *NetListCommand::close(){
-  //printf("Dumb node close\n");
-  //KeyValNode *kvn;
-  //kvn = getKeyVal("bom", mList);
-  //return mList;
-  return new StringNode("netlist");
+  KeyValNode *kvn;
+  kvn = getKeyVal("netlist", mList);
+  mList->append(kvn);
+  return mList;
 }
 
 

@@ -15,7 +15,7 @@ Q [a-zA-Z0-9_]
 %%
 {L}({D}|{L})*	{ strcpy(yylval.strVal,yytext); return SYMBOL; } 
 {Q}* {strcpy(yylval.strVal,yytext); return LEAF; }
-[{}:()-+<>@,=\;\.\]\[\*]    { return *yytext; } 
+[{}:()\-+<>@,=\;\.\]\[\*]    { return *yytext; } 
 [ \t\n]       ;       /* skip whitespace */
 
 L?\"(\\.|[^\\"])*\" { strcpy(yylval.strVal,yytext); return STRING;}

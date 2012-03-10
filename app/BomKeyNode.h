@@ -23,15 +23,17 @@ class BomKeyNode: public KeyValNode{
   void addComponent(MapNode *pNode);
   void setMajor(int pMajor);
   int count();
-  void printRef(MapNode *pNode, const char *tag);
+  const char* printRef(MapNode *pNode);
+  void fprintPcb(FILE *pFout);
+
  private:
   void buildItem(const char *pId, KeyValNode *pKvn);
   int refCount(char pRef);
-  
   ListNode *mList;
   BomItem *mHead;
   int mMajor;
   int mCount;
+  char mTmpRef[32];
 };
 
 #endif

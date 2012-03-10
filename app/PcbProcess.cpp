@@ -1,23 +1,32 @@
 #include "PcbProcess.h"
 
 
-void DoNetList(BomKeyNode *pBkn, ListNode *pNetList){
+void DoNetList(FILE *pFout, BomKeyNode *pBkn, ListNode *pNetList){
   KeyValNode *kvn;
   MapNode *mn;
   ListNode *ln;
   int c,d;
+  const char *net_in;
+  char net_out[32];
   for(c = 0; c < pNetList->count(); c++){
     mn = pNetList->getNode(c);
     if(mn->nodeType() == 2){
       kvn = (KeyValNode*)mn;
       mn = kvn->value();
       if(mn->nodeType() == 3 && mn != pNetList){
-	printf("%s: ", kvn->key());
+	net_in = kvn->key();
+	if(net_in[0] != '*'){
+	  strcpy(net_out, net_in);
+	}else{
+	  sprintf(net_out, "unnamed_%s", &(net_in[1]));
+	}
+	fprintf(pFout, "%s\t", net_out);
+	
 	ln = (ListNode *) mn;
 	for(d = 0; d < ln->count(); d++){
-	  pBkn->printRef(ln->getNode(d));
+	  fprintf(pFout, "%s",pBkn->printRef(ln->getNode(d)));
 	}
-	printf("\n");
+	fprintf(pFout, "\n");
       }
     }
   }  
@@ -25,10 +34,19 @@ void DoNetList(BomKeyNode *pBkn, ListNode *pNetList){
 
 
 void PcbProcess(const char *pCircuit){
+  FILE *net;
+  FILE *pcb;
   BomKeyNode *bkn;
   ListNode *ln;
   MapNode *mn;
   MapNode *tmp;
+  char netname[32];
+  char pcbname[32];
+  sprintf(netname, "%s.net", pCircuit);
+  sprintf(pcbname, "%s.pcb", pCircuit);
+  net = fopen(netname, "w");
+  pcb = fopen(pcbname, "w");
+
   mn = gVxm.symbols->getNode(pCircuit);
   if(mn == NULL){
     printf("Symbol not found\n");
@@ -55,7 +73,9 @@ void PcbProcess(const char *pCircuit){
     return;
   }
   ln = (ListNode*) tmp;
-  DoNetList(bkn, ln);
-  bkn->printPcb();
+  DoNetList(net, bkn, ln);
+  bkn->fprintPcb(pcb);
+  fclose(net);
+  fclose(pcb);
 }
 

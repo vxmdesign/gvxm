@@ -2,6 +2,8 @@
 #include <malloc.h>
 #include "Vxm.h"
 #include "DbFile.h"
+#include "../app/PcbProcess.h"
+
 extern int yyparse();
 extern FILE *yyin;
 
@@ -23,5 +25,8 @@ int main(int argc, char **argv){
   gVxm.parts = db->buildPartMap();
   yyin = f;
   yyparse();
+  if(argc == 3){
+    PcbProcess(argv[2]);
+  }
   return 0;
 }

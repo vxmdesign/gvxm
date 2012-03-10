@@ -24,7 +24,18 @@ int ListNode::nodeException(){
 }
 
 void ListNode::append(MapNode *pNode){
-
+  int c;
+  MapNode *mn;
+  ListNode *ln;
+  if(pNode->nodeType() == 3){
+    ln = (ListNode *) pNode;
+    for(c = 0; c < ln->count(); c++){
+      mn = ln->getNode(c);
+      mn->setParent(this);
+      mList->append(pNode);
+    }
+    return;
+  }
   pNode->setParent(this);
   mList->append(pNode);
 }
