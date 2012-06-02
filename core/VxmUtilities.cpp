@@ -73,3 +73,30 @@ void getHiddenId(char *pId){
   }
   gVxm.hiddenIdNum++;
 }
+
+char *fileLoader(const char *pFilename){
+  struct stat sz;
+  char *fbuf;
+  int fd;
+  int i;
+  stat(pFilename, &sz);
+  if(sz.st_size == 0){
+    return NULL;
+  }
+  fbuf = (char *) malloc((sizeof(char) * sz.st_size) + 1);
+  fd = open(pFilename, O_RDONLY);
+  if(fd <= 0){
+    printf("Cannot open file??\n");
+    free(fbuf);
+    return NULL;
+  }
+  i = read(fd, fbuf, sz.st_size);
+  if(i != sz.st_size){
+    printf("Size mismatch\n");
+    free(fbuf);
+    return NULL;
+  }
+  close(fd);
+  fbuf[sz.st_size] = '\0';
+  return fbuf;
+}

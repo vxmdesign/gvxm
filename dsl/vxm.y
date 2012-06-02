@@ -43,7 +43,7 @@ map_obj:
 	;
 
 open_cmd:
-	SYMBOL '('		{PUSH_CMD($1);}
+	SYMBOL '('		{ PUSH_CMD($1);}
 	;
 
 close_cmd:

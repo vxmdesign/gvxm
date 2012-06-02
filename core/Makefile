@@ -1,4 +1,4 @@
-SRCS := MapNode.cpp LeafNode.cpp ListNode.cpp KeyValNode.cpp MapList.cpp SymbolTable.cpp StrQueue.cpp StringNode.cpp  VxmUtilities.cpp TreeUtilities.cpp CommandBase.cpp BaseTreeProc.cpp VxmTest.cpp
+SRCS := MapNode.cpp LeafNode.cpp ListNode.cpp KeyValNode.cpp MapList.cpp SymbolTable.cpp StrQueue.cpp StringNode.cpp  VxmUtilities.cpp TreeUtilities.cpp CommandBase.cpp BaseTreeProc.cpp DynamicString.cpp VxmGlobal.cpp
 
 
 

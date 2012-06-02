@@ -22,6 +22,7 @@ using namespace std;
 
 class DbFile{
  public:
+  DbFile();
   DbFile(const char *pFilename);
   void saveDb(const char *pFilename);
   PartMap *buildPartMap();

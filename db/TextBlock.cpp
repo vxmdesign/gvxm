@@ -1,5 +1,18 @@
 #include "TextBlock.h"
 
+TextBlock::TextBlock(const char *pUid, char *pBlock){
+  int c;
+  mEntry = (DbEntry*) malloc(sizeof(DbEntry));
+  strcpy(mEntry->uid, pUid);
+  mEntry->len = strlen(pBlock);
+  mBlock = pBlock;
+  mEntry->args = 0;
+  for(c = 0; c < mEntry->len; c++){
+    if(mBlock[c] == '$') mEntry->args++;
+  }
+  parseBlock();
+}
+
 TextBlock::TextBlock(TextBlock *pBlock){
   int c;
   mBlock = pBlock->mBlock;
@@ -48,6 +61,7 @@ int TextBlock::blockLen(){
 void TextBlock::buildBlock(char *pOutput){
   int c;
   int idx;
+  int tmplen;
   c = 0;
   idx = 0;
   while(mblks[c].argnum != 0){
@@ -57,6 +71,7 @@ void TextBlock::buildBlock(char *pOutput){
     idx = strlen(pOutput);
     c++;
   }
+  tmplen = strlen(mblks[c].blk);
   strcpy(&(pOutput[idx]), mblks[c].blk);
 }
 

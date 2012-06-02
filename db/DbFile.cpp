@@ -1,12 +1,16 @@
 #include "DbFile.h"
 
+DbFile::DbFile(){
+
+}
+
 DbFile::DbFile(const char *pFilename){
   int fd;
   int c;
   fd = open(pFilename, O_RDONLY);
   c = 0;
   while(loadUnit(fd) == 1)c++;
-  printf("Loaded %d entries\n", c);
+  printf("# Loaded %d entries\n", c);
   close(fd);
 }
 
@@ -14,7 +18,7 @@ void DbFile::saveDb(const char *pFilename){
   DbUnit *db;
   int fd;
   unsigned int c;
-  fd = open(pFilename, O_WRONLY);
+  fd = open(pFilename, O_WRONLY | O_CREAT, S_IRUSR | S_IWUSR);
   for(c = 0; c < mList.size(); c++){
     db = mList[c];
     write(fd, db->entry, sizeof(DbEntry));
@@ -47,12 +51,13 @@ int DbFile::loadUnit(int pFd){
   dbu = (DbUnit *) malloc(sizeof(DbUnit));
   dbu->entry = (DbEntry *)malloc(sizeof(DbEntry));
   *(dbu->entry) = tmp;
-  dbu->blk = (char *) malloc(sizeof(char) * dbu->entry->len);
+  dbu->blk = (char *) malloc(sizeof(char) * (dbu->entry->len+1));
   i = read(pFd, dbu->blk, dbu->entry->len);
   if(i != dbu->entry->len){
-    printf("Entry error\n");
+    printf("Entry error. Read failed %d Exp: %d\n", i, dbu->entry->len);
     return 0;
   }
+  dbu->blk[dbu->entry->len] = '\0';
   dbu->ref = new TextBlock(dbu->entry, dbu->blk);
   mList.push_back(dbu);
   return 1;

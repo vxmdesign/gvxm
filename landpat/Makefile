@@ -1,8 +1,6 @@
-SRCS := DbFile.cpp PartMap.cpp TextBlock.cpp
+SRCS := ResChip.cpp BaseChip.cpp Pad.cpp PcbPad.cpp StdPackages.cpp SoicChip.cpp QfpChip.cpp RqfpChip.cpp DfnChip.cpp PatternDb.cpp UsbChip.cpp
 
 OBJS := $(patsubst %.cpp,%.o,$(SRCS))
-
-all: $(TARGET_OBJ) 
 
 $(TARGET_OBJ): $(OBJS)
 	ld -r -g -o $(TARGET_OBJ) $(OBJS)

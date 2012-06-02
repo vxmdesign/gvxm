@@ -3,6 +3,7 @@
 
 #include <stdio.h>
 #include <string.h>
+#include <malloc.h>
 
 #include "DbEntry.h"
 
@@ -16,6 +17,8 @@ class TextBlock{
  public:
   TextBlock(DbEntry *pEntry, char *pBlock);
   TextBlock(TextBlock *pBlock);
+  TextBlock(const char *pUid, char *pBlock);
+
   void setArg(const char *pArg, int pArgnum);
   int blockLen();
   int argCount();

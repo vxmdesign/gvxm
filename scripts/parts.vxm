@@ -1,0 +1,9 @@
+landDatabase:{lands(
+  +HEAD:"./data/Header.pg",
+  +TAIL:"./data/Footer.pg",
+  <res>STD0805:"0805",
+  <res>STD0603:"0603",
+  +STDR025:"./data/TmpPart.p2",
+  PA0001:"570A",
+  PA0002:"A28" 
+)};

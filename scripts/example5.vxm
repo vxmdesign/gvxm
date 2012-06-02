@@ -25,7 +25,36 @@ cpld:{
     jtag:{tck,tdi,tdo,tms}
   }]
 };
-
+ftdi:{
+  ssop28:[{
+    txd:1,
+    dtr_n:2,
+    rts_n:3,
+    vccio:4,
+    rxd:5,
+    ri_n:6,
+    gnd:7,
+    dsr_n:9,
+    dcd_n:10,
+    cts_n:11,
+    cbus4:12,
+    cbus2:13,
+    cbus3:14,
+    usbdp:15,
+    usbdm:16,
+    vout33:17,
+    gnd:18,
+    reset_n:19,
+    vcc:20,
+    gnd:21,
+    cbus1:22,
+    cbus0:23,
+    agnd:25,
+    test:26,
+    osci:27,
+    osco:28
+  }]
+};
 osc:{
   m100:[{
     stdby:1,

@@ -25,4 +25,6 @@ y.tab.c: vxm.y
 clean:
 	rm -f *.o
 	rm -f *~
+	rm -f y.tab.*
+	rm -f lex.yy.c
 
